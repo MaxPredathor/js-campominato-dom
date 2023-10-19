@@ -11,6 +11,7 @@ function myCode(){
     let gameStatus = false;
     let ilTuoPunteggio = 0;
     const numberOfTry = selector - NUM_BOMBS;
+    let bombExplosion = new Audio('../audio/Bomb, boom, cannon sound effect.mp3')
 
         btn.addEventListener('click', function(){
             const selector = parseInt(document.querySelector('select').value);
@@ -55,6 +56,7 @@ function myCode(){
                         fineGame(myBombs);
                         gameStatus = true;
                         punteggio.innerHTML = `You LOST!! ${ilTuoPunteggio}`
+                        bombExplosion.play();
                     }else{
                         myBox.classList.add('onclick');
                         ilTuoPunteggio++;
