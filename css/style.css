@@ -1,0 +1,36 @@
+body{
+    background-image: url(/Bonus/img/circle-scatter-haikei.svg);
+    background-color: rgba(16, 15, 15, 0.873);
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+h1{
+    color: firebrick;
+    margin: 0;
+}
+.wrapper{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.playground{
+    width: 800px;
+    height: 800px;
+    border: 1px solid white;
+    display: flex;
+    flex-wrap: wrap;
+}
+.box{
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.onclick{
+    background-color: aqua;
+}
+
