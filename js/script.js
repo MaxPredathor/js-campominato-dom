@@ -14,6 +14,8 @@ function myCode(){
         const NUM_BOMBS = 16;
         let myBombs = bombCreation();
         let gameStatus = false;
+        let ilTuoPunteggio = 0;
+        const numberOfTry = numeroBoxes - NUM_BOMBS;
 
         btn.addEventListener('click', function(){
 
@@ -30,10 +32,9 @@ function myCode(){
             btn.classList.remove('d-none');
             selector.classList.remove('d-none');
             gameStatus = false;
-
+            ilTuoPunteggio = 0;
         })
 
-    
         function boxCreation(myBoxIndex){
             const myBox = document.createElement('div'); 
             myBox.classList.add('box');
@@ -42,30 +43,34 @@ function myCode(){
             myBox.style.width = `calc(100% / ${radiceQ})`;
             myBox.style.height = `calc(100% / ${radiceQ})`;
 
-
             myBox.addEventListener('click', function clickMe(){
                 console.log(this.innerText);
-                
+                let punteggio = document.getElementById('punteggio');
+
                 if(gameStatus === false){
                     if(myBombs.includes(parseInt(myBox.innerText))){
                         myBox.classList.add('bomb');
                         myBox.style.color = 'black';
                         fineGame();
                         gameStatus = true;
+                        punteggio.innerHTML = `You LOST!! ${ilTuoPunteggio}`
                     }else{
                         myBox.classList.add('onclick');
+                        ilTuoPunteggio++;
+                            if(numberOfTry === ilTuoPunteggio){
+                                fineGame();
+                                gameStatus = true;
+                                punteggio.innerHTML = `You WON!! ${ilTuoPunteggio}`
+                            }else{
+                                punteggio.innerHTML = `Il tuo punteggio ${ilTuoPunteggio}`
+                            }
                     }
                 }else {
                     myBox.removeEventListener('click', clickMe);               
                 }
-
-
-                
-                
-
+                myBox.removeEventListener('click', clickMe); 
             });
             return myBox;
-    
         }
 
         function bombCreation(){
@@ -95,10 +100,5 @@ function myCode(){
                 }
             }
         }
-
     })  
-
 };
-
-
-
