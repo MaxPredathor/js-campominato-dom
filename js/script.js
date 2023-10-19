@@ -1,155 +1,215 @@
-
-myCode();
-
-function myCode(){
+(function(){
     
     const btn = document.getElementById('buttonGenera');
     const btn2 = document.getElementById('buttonReset');
+    const option = document.getElementById('selector');
     const NUM_BOMBS = 16;
     let gameStatus = false;
     let ilTuoPunteggio = 0;
+    let punteggio = document.getElementById('punteggio');
     let bombExplosion = new Audio('../audio/Bomb, boom, cannon sound effect.mp3');
-    let winSound = new Audio('../WIN sound effect no copyright.mp3');
+    let winSound = new Audio('../audio/WIN sound effect no copyright.mp3');
+    let myBombs;
+    let myBox;
+    let click;
+    let selector;
 
-        btn.addEventListener('click', function(){
-            const playground = document.getElementById('playground');
-            const selector = parseInt(document.querySelector('select').value);
+    btn.addEventListener('click', function(){
+        selector = parseInt(document.querySelector('select').value);
+        const playground = document.getElementById('playground');
+        playground.innerHTML = '';
+        ilTuoPunteggio = 0;
+        punteggio.innerHTML = '0';
 
-            let myBombs = bombCreation(selector);
+        myBombs = bombCreation(selector);
 
-            ilTuoPunteggio.innerHTML = '';
-            playground.innerHTML = '';
-            for(let i = 0; i < selector; i++){
-                let x = boxCreation(i, myBombs, selector);
-                playground.append(x);
-            }
-        });
-
-        btn2.addEventListener('click', function(){
-            playground.innerHTML = '';
-            btn2.classList.add('d-none');
-            btn.classList.remove('d-none');
-            selector.classList.remove('d-none');
-            punteggio.classList.remove('lose','win');
-            gameStatus = false;
-            ilTuoPunteggio = 0;
-        })
-
-        function boxCreation(myBoxIndex, myBombs, selector){
-            const myBox = document.createElement('div'); 
-            const numberOfTry = selector - NUM_BOMBS;
-            myBox.classList.add('box');
-            myBox.innerHTML = myBoxIndex + 1;
-            let radiceQ = Math.sqrt(selector);
-            myBox.style.width = `calc(100% / ${radiceQ})`;
-            myBox.style.height = `calc(100% / ${radiceQ})`;
-
-            myBox.addEventListener('click', function clickMe(){
-                console.log(this.innerText);
-                let punteggio = document.getElementById('punteggio');
-
-                if(gameStatus === false){
-                    if(myBombs.includes(parseInt(myBox.innerText))){
-                        myBox.classList.add('bomb');
-                        myBox.style.color = 'black';
-                        fineGame(myBombs);
-                        gameStatus = true;
-                        punteggio.innerHTML = `You LOST!! ${ilTuoPunteggio}`
-                        bombExplosion.play();
-                        punteggio.classList.add('lose');
-                    }else{
-                        myBox.classList.add('onclick');
-                        adjacentCheck(selector, myBombs, myBox);
-                        ilTuoPunteggio++;
-                            if(numberOfTry === ilTuoPunteggio){
-                                fineGame(myBombs);
-                                gameStatus = true;
-                                punteggio.classList.add('win');
-                                punteggio.innerHTML = `You WON!! ${ilTuoPunteggio}`
-                                winSound.play();
-                            }else{
-                                punteggio.innerHTML = `Il tuo punteggio ${ilTuoPunteggio}`
-                            }
-                    }
-
-                }else {
-
-                }
-                myBox.removeEventListener('click', clickMe); 
-            });
-            return myBox;
+        for(let i = 0; i < selector; i++){
+            myBox = boxCreation(i);
+            playground.append(myBox);
         }
+    });
 
-        function bombCreation(selector){
-            let bombArray = [];
-            while(bombArray.length <= NUM_BOMBS - 1){
-                let num = getRndInteger(1, selector);
-                if(bombArray.includes(num)){
+    btn2.addEventListener('click', function(){
+        ilTuoPunteggio = 0;
+        punteggio.innerHTML = '0';
+        playground.innerHTML = '';
+        btn2.classList.add('d-none');
+        btn.classList.remove('d-none');
+        option.classList.remove('d-none');
+        punteggio.classList.remove('lose','win');
+        gameStatus = false;
+    })
 
-                }else{
-                    bombArray.push(num);
-                }
-            }
-            console.log(bombArray.sort());
-            return bombArray;
-        }
+    function boxCreation(myBoxIndex){
+        const myBox = document.createElement('div'); 
+        const numberOfTry = selector - NUM_BOMBS;
+        myBox.classList.add('box');
+        myBox.innerHTML = myBoxIndex + 1;
+        let radiceQ = Math.sqrt(selector);
+        myBox.style.width = `calc(100% / ${radiceQ})`;
+        myBox.style.height = `calc(100% / ${radiceQ})`;
 
-        function fineGame(myBombs){
-            const myBoxes = document.getElementsByClassName('box');
-            for(let i = 0; i < myBoxes.length; i++){
-                let allBombs = myBoxes[i];
-                if(myBombs.includes(parseInt(allBombs.innerHTML))){
-                    allBombs.classList.add('bomb');
-                    allBombs.style.color = 'black';
-                    btn2.classList.remove('d-none');
-                    btn.classList.add('d-none');
-                    selector.classList.add('d-none');
-                }
-            }
-        } 
-        function adjacentCheck(selector, myBombs, myBox){
-            const click = document.getElementsByClassName('onclick');
-            for(let i = 0; i < click.length; i++){
-                let adjacentArray = [];
-                let x = parseInt(click[i].innerHTML);
-                let root = Math.sqrt(selector);
-                let north = x + root;
-                let south = x - root;
-                let west = x - 1;
-                let east = x + 1;
-                let bombAmount = 0;
-                if(x / selector === 1){
-                    
-                }else if(x / root === 1){
-
-                }else if(x * 1 === 1){
-
-                }else if((x + (root - 1)) / selector === 1){
-
-                }else if(x < root){
-
-                }else if(x > selector - (root - 1)){
-
-                }else if((x - 1) % root === 0 ){
-
-                }else if(x % root === 0 ){
-
-                }else{
-                    adjacentArray.push(north, south, east, west);
-                    console.log(adjacentArray);
-                    for(let i = 0; i < adjacentArray.length; i++)
-                        if(myBombs.includes(adjacentArray[i])){
-                            console.log('yay');
-                            bombAmount++;
-
-                        }
-
-                }
-                myBox.innerHTML = bombAmount;
-                
-                
-
-            }
+        myBox.addEventListener('click', function clickMe(){
             
+            console.log(this.innerText);
+            if(gameStatus === false){
+                if(myBombs.includes(parseInt(myBoxIndex + 1))){
+                    myBox.classList.add('bomb');
+                    myBox.style.color = 'black';
+                    fineGame();
+                    punteggio.innerHTML = `You LOST!! ${ilTuoPunteggio}`
+                    bombExplosion.play();
+                    punteggio.classList.add('lose');
+                }else{
+                    myBox.classList.add('onclick');
+                    ilTuoPunteggio++;
+                    adjacentCheck(myBox);
+                    if(ilTuoPunteggio === numberOfTry){
+                        fineGame();
+
+                        punteggio.classList.add('win');
+                        punteggio.innerHTML = `You WON!! ${ilTuoPunteggio}`
+                        winSound.play();
+                    }else{
+                        punteggio.innerHTML = `Il tuo punteggio ${ilTuoPunteggio}`
+                    }
+                }
+
+            }else {
+                myBox.removeEventListener('click', clickMe); 
+            }
+            myBox.removeEventListener('click', clickMe); 
+        });
+        return myBox;
+    }
+
+    function bombCreation(){
+        let bombArray = [];
+        while(bombArray.length < NUM_BOMBS){
+            let num = getRndInteger(1, selector);
+            if(bombArray.includes(num)){
+
+            }else{
+                bombArray.push(num);
+            }
         }
-};
+        console.log(bombArray.sort());
+        return bombArray;
+    }
+
+    function fineGame(){
+        const myBoxes = document.getElementsByClassName('box');
+        for(let i = 0; i < myBoxes.length; i++){
+            let allBombs = myBoxes[i];
+            if(myBombs.includes(parseInt(allBombs.innerHTML))){
+                allBombs.classList.remove('bomb');
+                allBombs.classList.add('bomb');
+                allBombs.style.color = 'black';
+                btn2.classList.remove('d-none');
+                btn.classList.add('d-none');
+                option.classList.add('d-none');
+            }
+        }
+        gameStatus = true;
+    } 
+    
+    function adjacentCheck(myBox){
+        click = document.getElementsByClassName('myBox');       
+        let adjacentArray = [];
+        let x = parseInt(myBox.innerHTML);
+        let root = parseInt(Math.sqrt(selector));
+        let up = x - root;
+        let down = x + root;
+        let left = x - 1;
+        let right = x + 1;
+        let bombAmount = 0;
+        if(x / selector === 1){
+            adjacentArray.push(up, left);
+            for(let b = 0; b < adjacentArray.length; b++){
+                if(myBombs.includes(adjacentArray[b])){
+                    bombAmount++;
+                    console.log(bombAmount);
+                }
+            }
+            myBox.innerHTML = bombAmount;   
+
+        }else if(x / root === 1){
+            adjacentArray.push(down, left);
+            for(let n = 0; n < adjacentArray.length; n++){
+                if(myBombs.includes(adjacentArray[n])){
+                    bombAmount++;
+                    console.log(bombAmount);
+                }
+            }
+            myBox.innerHTML = bombAmount;
+
+        }else if(x * 1 === 1){
+            adjacentArray.push(down, right);
+            for(let v = 0; v < adjacentArray.length; v++){
+                if(myBombs.includes(adjacentArray[v])){
+                    bombAmount++;
+                    console.log(bombAmount);
+                }
+            }
+            myBox.innerHTML = bombAmount;
+
+        }else if((x + (root - 1)) / selector === 1){
+            adjacentArray.push(up, right);
+            for(let d = 0; d < adjacentArray.length; d++){
+                if(myBombs.includes(adjacentArray[d])){
+                    bombAmount++;
+                    console.log(bombAmount);
+                }
+            }
+            myBox.innerHTML = bombAmount;
+
+        }else if(x < root){
+            adjacentArray.push(down, right, left);
+            for(let g = 0; g < adjacentArray.length; g++){
+                if(myBombs.includes(adjacentArray[g])){
+                    bombAmount++;
+                    console.log(bombAmount);
+                }
+            }
+            myBox.innerHTML = bombAmount;
+
+        }else if(x > selector - root){
+            adjacentArray.push(up, right, left);
+            for(let g = 0; g < adjacentArray.length; g++){
+                if(myBombs.includes(adjacentArray[g])){
+                    bombAmount++;
+                }
+            }
+            myBox.innerHTML = bombAmount;
+
+        }else if((x - 1) % root === 0 ){
+            adjacentArray.push(up, down, right);
+            for(let g = 0; g < adjacentArray.length; g++){
+                if(myBombs.includes(adjacentArray[g])){
+                    bombAmount++;
+                }
+            }
+            myBox.innerHTML = bombAmount;
+
+        }else if(x % root === 0 ){
+            adjacentArray.push(up, down, left);
+            for(let g = 0; g < adjacentArray.length; g++){
+                if(myBombs.includes(adjacentArray[g])){
+                    bombAmount++;
+                }
+            }
+            myBox.innerHTML = bombAmount;
+
+        }else{
+            adjacentArray.push(up, down, right, left);
+            for(let g = 0; g < adjacentArray.length; g++){
+                if(myBombs.includes(adjacentArray[g])){
+                    bombAmount++;
+                }
+            }
+            myBox.innerHTML = bombAmount;
+
+        }
+                
+    }
+}) ();
