@@ -19,7 +19,7 @@ function myCode(){
 
             ilTuoPunteggio.innerHTML = '';
             playground.innerHTML = '';
-            for(let i = 1; i <= selector; i++){
+            for(let i = 0; i < selector; i++){
                 let x = boxCreation(i, myBombs, selector);
                 playground.append(x);
             }
@@ -39,7 +39,7 @@ function myCode(){
             const myBox = document.createElement('div'); 
             const numberOfTry = selector - NUM_BOMBS;
             myBox.classList.add('box');
-            myBox.innerHTML = myBoxIndex;
+            myBox.innerHTML = myBoxIndex + 1;
             let radiceQ = Math.sqrt(selector);
             myBox.style.width = `calc(100% / ${radiceQ})`;
             myBox.style.height = `calc(100% / ${radiceQ})`;
@@ -59,7 +59,7 @@ function myCode(){
                         punteggio.classList.add('lose');
                     }else{
                         myBox.classList.add('onclick');
-                        adjacentCheck();
+                        adjacentCheck(selector, myBombs, myBox);
                         ilTuoPunteggio++;
                             if(numberOfTry === ilTuoPunteggio){
                                 fineGame(myBombs);
@@ -107,16 +107,17 @@ function myCode(){
                 }
             }
         } 
-        function adjacentCheck(selector){
+        function adjacentCheck(selector, myBombs, myBox){
             const click = document.getElementsByClassName('onclick');
             for(let i = 0; i < click.length; i++){
                 let adjacentArray = [];
-                let x = click[1]. innerHTML;
-                let root = Match.sqrt(selector);
+                let x = parseInt(click[i].innerHTML);
+                let root = Math.sqrt(selector);
                 let north = x + root;
                 let south = x - root;
                 let west = x - 1;
                 let east = x + 1;
+                let bombAmount = 0;
                 if(x / selector === 1){
                     
                 }else if(x / root === 1){
@@ -135,9 +136,17 @@ function myCode(){
 
                 }else{
                     adjacentArray.push(north, south, east, west);
-                    console.log(adjacentArray)
+                    console.log(adjacentArray);
+                    for(let i = 0; i < adjacentArray.length; i++)
+                        if(myBombs.includes(adjacentArray[i])){
+                            console.log('yay');
+                            bombAmount++;
+
+                        }
 
                 }
+                myBox.innerHTML = bombAmount;
+                
                 
 
             }
