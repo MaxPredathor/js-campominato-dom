@@ -4,28 +4,25 @@ myCode();
 function myCode(){
     
     const btn = document.getElementById('buttonGenera');
-    
-    
     const btn2 = document.getElementById('buttonReset');
     const NUM_BOMBS = 16;
     let gameStatus = false;
     let ilTuoPunteggio = 0;
-    const numberOfTry = selector - NUM_BOMBS;
-    let bombExplosion = new Audio('../audio/Bomb, boom, cannon sound effect.mp3')
+    let bombExplosion = new Audio('../audio/Bomb, boom, cannon sound effect.mp3');
+    let winSound = new Audio('../WIN sound effect no copyright.mp3');
 
         btn.addEventListener('click', function(){
-            const selector = parseInt(document.querySelector('select').value);
             const playground = document.getElementById('playground');
+            const selector = parseInt(document.querySelector('select').value);
 
             let myBombs = bombCreation(selector);
 
-            ilTuoPunteggio.innerHTML = 0;
+            ilTuoPunteggio.innerHTML = '';
             playground.innerHTML = '';
             for(let i = 1; i <= selector; i++){
                 let x = boxCreation(i, myBombs, selector);
                 playground.append(x);
             }
-    
         });
 
         btn2.addEventListener('click', function(){
@@ -33,12 +30,14 @@ function myCode(){
             btn2.classList.add('d-none');
             btn.classList.remove('d-none');
             selector.classList.remove('d-none');
+            punteggio.classList.remove('lose','win');
             gameStatus = false;
             ilTuoPunteggio = 0;
         })
 
         function boxCreation(myBoxIndex, myBombs, selector){
             const myBox = document.createElement('div'); 
+            const numberOfTry = selector - NUM_BOMBS;
             myBox.classList.add('box');
             myBox.innerHTML = myBoxIndex;
             let radiceQ = Math.sqrt(selector);
@@ -57,17 +56,22 @@ function myCode(){
                         gameStatus = true;
                         punteggio.innerHTML = `You LOST!! ${ilTuoPunteggio}`
                         bombExplosion.play();
+                        punteggio.classList.add('lose');
                     }else{
                         myBox.classList.add('onclick');
+                        adjacentCheck();
                         ilTuoPunteggio++;
                             if(numberOfTry === ilTuoPunteggio){
                                 fineGame(myBombs);
                                 gameStatus = true;
+                                punteggio.classList.add('win');
                                 punteggio.innerHTML = `You WON!! ${ilTuoPunteggio}`
+                                winSound.play();
                             }else{
                                 punteggio.innerHTML = `Il tuo punteggio ${ilTuoPunteggio}`
                             }
                     }
+
                 }else {
 
                 }
@@ -103,4 +107,40 @@ function myCode(){
                 }
             }
         } 
+        function adjacentCheck(selector){
+            const click = document.getElementsByClassName('onclick');
+            for(let i = 0; i < click.length; i++){
+                let adjacentArray = [];
+                let x = click[1]. innerHTML;
+                let root = Match.sqrt(selector);
+                let north = x + root;
+                let south = x - root;
+                let west = x - 1;
+                let east = x + 1;
+                if(x / selector === 1){
+                    
+                }else if(x / root === 1){
+
+                }else if(x * 1 === 1){
+
+                }else if((x + (root - 1)) / selector === 1){
+
+                }else if(x < root){
+
+                }else if(x > selector - (root - 1)){
+
+                }else if((x - 1) % root === 0 ){
+
+                }else if(x % root === 0 ){
+
+                }else{
+                    adjacentArray.push(north, south, east, west);
+                    console.log(adjacentArray)
+
+                }
+                
+
+            }
+            
+        }
 };
