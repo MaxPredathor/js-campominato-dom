@@ -9,10 +9,10 @@ function myCode(){
 
     selector.addEventListener('change', function(){
 
-
         let numeroBoxes = selector.value;
         const NUM_BOMBS = 16;
         let myBombs = bombCreation();
+        let gameStatus = false;
 
         btn.addEventListener('click', function(){
 
@@ -22,6 +22,7 @@ function myCode(){
                 playground.append(x);
             }
         });
+
     
         function boxCreation(myBoxIndex){
             const myBox = document.createElement('div'); 
@@ -31,19 +32,26 @@ function myCode(){
             myBox.style.width = `calc(100% / ${radiceQ})`;
             myBox.style.height = `calc(100% / ${radiceQ})`;
 
+
             myBox.addEventListener('click', function clickMe(){
                 console.log(this.innerText);
-
-
-                if(myBombs.includes(parseInt(myBox.innerText))){
-                    myBox.classList.add('bomb');
-                    myBox.style.color = 'black';
-                    fineGame();
-                }else{
-                    myBox.classList.add('onclick');
-                }
                 
-                myBox.removeEventListener('click', clickMe);
+                if(gameStatus === false){
+                    if(myBombs.includes(parseInt(myBox.innerText))){
+                        myBox.classList.add('bomb');
+                        myBox.style.color = 'black';
+                        fineGame();
+                        gameStatus = true;
+                    }else{
+                        myBox.classList.add('onclick');
+                    }
+                }else {
+                    myBox.removeEventListener('click', clickMe);               
+                }
+
+
+                
+                
 
             });
             return myBox;
