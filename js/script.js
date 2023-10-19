@@ -37,11 +37,6 @@ function myCode(){
             return myBox;
     
         }
-        
-        function(){
-            
-        }
-        
 
     })  
 
