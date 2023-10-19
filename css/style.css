@@ -1,5 +1,5 @@
 body{
-    background-image: url(/Bonus/img/circle-scatter-haikei.svg);
+    background-image: url(/img/circle-scatter-haikei.svg);
     background-color: rgba(16, 15, 15, 0.873);
     background-repeat: no-repeat;
     background-size: cover;
@@ -32,5 +32,8 @@ h1{
 }
 .onclick{
     background-color: aqua;
+}
+.bomb{
+    background-color: red;
 }
 
