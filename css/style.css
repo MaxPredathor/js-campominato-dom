@@ -31,9 +31,13 @@ h1{
     align-items: center;
 }
 .onclick{
-    background-color: aqua;
+    background-image: url(/img/normalcell.png);
+    background-size: cover;
+    background-position: center;
 }
 .bomb{
-    background-color: red;
+    background-image: url(/img/icon3.png);
+    background-size: cover;
+    background-position: center;
 }
 

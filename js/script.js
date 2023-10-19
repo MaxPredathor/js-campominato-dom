@@ -12,7 +12,7 @@ function myCode(){
 
         let numeroBoxes = selector.value;
         const NUM_BOMBS = 16;
-        let bombs = bombCreation();
+        let myBombs = bombCreation();
 
         btn.addEventListener('click', function(){
 
@@ -30,18 +30,19 @@ function myCode(){
             let radiceQ = Math.sqrt(numeroBoxes);
             myBox.style.width = `calc(100% / ${radiceQ})`;
             myBox.style.height = `calc(100% / ${radiceQ})`;
+
             myBox.addEventListener('click', function clickMe(){
                 console.log(this.innerText);
 
 
-                if(bombs.includes(parseInt(myBox.innerText))){
+                if(myBombs.includes(parseInt(myBox.innerText))){
                     myBox.classList.add('bomb');
+                    myBox.style.color = 'black';
+                    fineGame();
                 }else{
                     myBox.classList.add('onclick');
                 }
                 
-                myBox.style.color = 'black';
-                myBox.style.fontWeight = 'bold';
                 myBox.removeEventListener('click', clickMe);
 
             });
@@ -61,6 +62,17 @@ function myCode(){
             }
             console.log(bombArray.sort());
             return bombArray;
+        }
+
+        function fineGame(){
+            const myBoxes = document.getElementsByClassName('box');
+            for(let i = 0; i < myBoxes.length; i++){
+                let allBombs = myBoxes[i];
+                if(myBombs.includes(parseInt(allBombs.innerHTML))){
+                    allBombs.classList.add('bomb');
+                    allBombs.style.color = 'black';
+                }
+            }
         }
 
     })  
