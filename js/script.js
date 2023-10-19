@@ -3,9 +3,10 @@ myCode();
 
 function myCode(){
     
-    const btn = document.querySelector('button');
+    const btn = document.getElementById('buttonGenera');
     const playground = document.getElementById('playground');
     const selector = document.querySelector('select');
+    const btn2 = document.getElementById('buttonReset');
 
     selector.addEventListener('change', function(){
 
@@ -22,6 +23,15 @@ function myCode(){
                 playground.append(x);
             }
         });
+
+        btn2.addEventListener('click', function(){
+            playground.innerHTML = '';
+            btn2.classList.add('d-none');
+            btn.classList.remove('d-none');
+            selector.classList.remove('d-none');
+            gameStatus = false;
+
+        })
 
     
         function boxCreation(myBoxIndex){
@@ -79,6 +89,9 @@ function myCode(){
                 if(myBombs.includes(parseInt(allBombs.innerHTML))){
                     allBombs.classList.add('bomb');
                     allBombs.style.color = 'black';
+                    btn2.classList.remove('d-none');
+                    btn.classList.add('d-none');
+                    selector.classList.add('d-none');
                 }
             }
         }
