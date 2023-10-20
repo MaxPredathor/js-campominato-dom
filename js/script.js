@@ -199,12 +199,12 @@
                     bombAmount++;
                 }
             }
-            
-
         }
+
         myBox.innerHTML = bombAmount;
         myBox.classList.add('fs');
         myBox.classList.add('fw-bold');
+        
         if(bombAmount === 4){
             myBox.style.color = 'firebrick';
         }else if(bombAmount === 3){
