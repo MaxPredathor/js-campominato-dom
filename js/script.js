@@ -130,8 +130,7 @@
                     bombAmount++;
                     console.log(bombAmount);
                 }
-            }
-            myBox.innerHTML = bombAmount;   
+            }   
 
         }else if(x / root === 1){
             adjacentArray.push(down, left);
@@ -141,7 +140,6 @@
                     console.log(bombAmount);
                 }
             }
-            myBox.innerHTML = bombAmount;
 
         }else if(x * 1 === 1){
             adjacentArray.push(down, right);
@@ -151,7 +149,6 @@
                     console.log(bombAmount);
                 }
             }
-            myBox.innerHTML = bombAmount;
 
         }else if((x + (root - 1)) / selector === 1){
             adjacentArray.push(up, right);
@@ -161,7 +158,6 @@
                     console.log(bombAmount);
                 }
             }
-            myBox.innerHTML = bombAmount;
 
         }else if(x < root){
             adjacentArray.push(down, right, left);
@@ -171,7 +167,6 @@
                     console.log(bombAmount);
                 }
             }
-            myBox.innerHTML = bombAmount;
 
         }else if(x > selector - root){
             adjacentArray.push(up, right, left);
@@ -180,7 +175,6 @@
                     bombAmount++;
                 }
             }
-            myBox.innerHTML = bombAmount;
 
         }else if((x - 1) % root === 0 ){
             adjacentArray.push(up, down, right);
@@ -189,7 +183,6 @@
                     bombAmount++;
                 }
             }
-            myBox.innerHTML = bombAmount;
 
         }else if(x % root === 0 ){
             adjacentArray.push(up, down, left);
@@ -198,7 +191,6 @@
                     bombAmount++;
                 }
             }
-            myBox.innerHTML = bombAmount;
 
         }else{
             adjacentArray.push(up, down, right, left);
@@ -207,9 +199,22 @@
                     bombAmount++;
                 }
             }
-            myBox.innerHTML = bombAmount;
+            
 
         }
-                
+        myBox.innerHTML = bombAmount;
+        myBox.classList.add('fs');
+        myBox.classList.add('fw-bold');
+        if(bombAmount === 4){
+            myBox.style.color = 'firebrick';
+        }else if(bombAmount === 3){
+            myBox.style.color = 'orange';
+        }else if(bombAmount === 2){
+            myBox.style.color = 'purple';
+        }else if(bombAmount === 1){
+            myBox.style.color = 'yellow';
+        }else{
+            myBox.style.color = 'green';
+        }            
     }
 }) ();
