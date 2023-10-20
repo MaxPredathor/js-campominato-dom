@@ -101,7 +101,7 @@
         const myBoxes = document.getElementsByClassName('box');
         for(let i = 0; i < myBoxes.length; i++){
             let allBombs = myBoxes[i];
-            if(myBombs.includes(parseInt(allBombs.innerHTML))){
+            if(myBombs.includes(i + 1)){
                 allBombs.classList.remove('bomb');
                 allBombs.classList.add('bomb');
                 allBombs.style.color = 'black';

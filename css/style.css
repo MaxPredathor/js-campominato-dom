@@ -41,22 +41,23 @@ h1{
     background-position: center;
 }
 .win{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     color: green;
     font-size: 100px;
-}
-.lose{
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+.lose{
     color: red;
     font-size: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .fs{
     font-size: 50px;
 }
+
 
